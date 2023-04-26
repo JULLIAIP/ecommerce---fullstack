@@ -14,8 +14,8 @@ This project is in progress, currently only the separate parts are working for t
 The screen flow on the homepage doesn't have triggers for back-end functions.
 
 ## Run
-To see the tables of the database, use the command: npx prisma studio.
-To run the front or the back end use the command : npm run dev
+### To see the tables of the database, use the command: npx prisma studio.
+### To run the front or the back end use the command : npm run dev
 
 ## [FLUXO MVP NO FIGMA](https://www.figma.com/proto/QRCRnNvk0MI4g1Nrx68049/Ecommerce---vibbra?node-id=202-448&scaling=min-zoom&page-id=202%3A19&starting-point-node-id=203%3A773)
 
