@@ -1,9 +1,5 @@
-# Test - Jullia izidorio
-
+# Vibbra Eccomerce
 Desenvolvimento de um ecommerce que permite comprar, vender ou trocar produtos de tecnologia.
-
-## Name
-Vibbra Eccomerce
 
 ## Description
 This project has the login and home screens completed. Additionally, on the login screen, we can access a registration form by clicking "Start a 14 day free trial" and on the home screen, by clicking on the "Negociações > Criar negociação" menu, we can access the form for creating a new negotiation.
