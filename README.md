@@ -14,6 +14,8 @@ The screen flow on the homepage doesn't have triggers for back-end functions.
 ![image](https://user-images.githubusercontent.com/81257067/234585765-ed124cfd-8e07-4ebc-8dc2-baa64630a6a2.png)
 
 ### To run the front or the back end use the command : npm run dev
+![image](https://user-images.githubusercontent.com/81257067/234586388-22004da1-9103-483d-8cf2-2facb87a0dac.png)
+
 
 ## [FLUXO MVP NO FIGMA](https://www.figma.com/proto/QRCRnNvk0MI4g1Nrx68049/Ecommerce---vibbra?node-id=202-448&scaling=min-zoom&page-id=202%3A19&starting-point-node-id=203%3A773)
 
