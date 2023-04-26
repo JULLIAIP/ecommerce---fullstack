@@ -1,0 +1,1 @@
+export const ButtonPrimary = 'h-10 text-Button justify-center items-center bg-Primary text-White rounded-sm'

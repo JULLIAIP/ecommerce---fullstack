@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+//principal tables 
+
+model dealType {
+  id      String    @id @default(uuid()) //primary key | universal id 
+  name    String    @unique
+  Deal    Deal[]
+  Urgency Urgency[]
+}
+
+model User {
+  id        String      @id @default(uuid()) //primary key | universal id 
+  name      String
+  email     String      @unique
+  password  String
+  login     String      @unique
+  location  Location?
+  deals     Deal[]
+  proposals Proposals[]
+  Invite    Invite[]
+  // Delivery  Delivery[]
+  Message   Message[]
+
+  @@map("users") //alterando nome da tabela
+}
+
+model Deal {
+  id          String      @id @default(uuid()) //primary key | universal id 
+  type        dealType    @relation(fields: [dealTypeId], references: [id])
+  value       Float
+  name        String
+  description String
+  tradeFor    String
+  location    Location?   @relation(fields: [locationLat], references: [lat]) //foreign key | does not create a new colunm in the table
+  urgency     Urgency?
+  photo       Photos[]
+  creator     User        @relation(fields: [userId], references: [id])
+  creatorId   String
+  locationLat Float?
+  userId      String
+  Proposals   Proposals[]
+  Message     Message[]
+  dealTypeId  String
+}
+
+//pivot table
+model Proposals {
+  id        String    @id @default(uuid()) //primary key | universal id 
+  value     Int
+  accepted  Boolean
+  offerer   User      @relation(fields: [userId], references: [id])
+  offererId String
+  deal      Deal      @relation(fields: [dealId], references: [id])
+  dealId    String
+  messages  Message[]
+  userId    String
+  Invite    Invite[]
+  //Delivery  Delivery[]
+
+  @@unique([offererId, dealId]) // the same person cannot make two proposals in the deal
+}
+
+model Invite {
+  id          String    @id @default(uuid()) //primary key | universal id 
+  invited     User      @relation(fields: [userId], references: [id])
+  invitedId   String
+  proposal    Proposals @relation(fields: [proposalsId], references: [id])
+  proposalId  String
+  userId      String
+  proposalsId String
+}
+
+// model Delivery {
+//   id            String    @id @default(uuid()) //primary key | universal id
+//   offerer       User      @relation(fields: [userId], references: [id])
+//   offererId     String
+//   oferrerAdress Location  @relation(fields: [locationLat], references: [lat])
+//   creator       User      @relation(fields: [userId], references: [id])
+//   creatorId     String
+//   creatorAdress Location  @relation(fields: [locationLat], references: [lat])
+//   proposal      Proposals @relation(fields: [proposalsId], references: [id])
+//   proposalId    String
+//   userId        String
+//   locationLat   Float
+//   proposalsId   String
+// }
+
+model Location {
+  lat      Float  @id
+  lng      Float
+  address  String
+  city     String
+  state    String
+  zip_code Int
+  user     User   @relation(fields: [userId], references: [id]) //relation 
+  userId   String @unique
+  Deal     Deal[]
+  // Delivery Delivery[]
+}
+
+model UrgencyType {
+  id      String    @id @default(uuid()) //primary key | universal id 
+  name    String    @unique
+  Urgency Urgency[]
+}
+
+model Urgency {
+  id            String      @id @default(uuid()) //primary key | universal id 
+  type          UrgencyType @relation(fields: [urgencyTypeId], references: [id])
+  limiteDate    DateTime?
+  dealId        String?     @unique
+  deal          Deal?       @relation(fields: [dealId], references: [id])
+  urgencyTypeId String
+  dealType      dealType?   @relation(fields: [dealTypeId], references: [id])
+  dealTypeId    String
+}
+
+model Photos {
+  id     String @id @default(uuid()) //primary key | universal id 
+  src    String
+  dealId String
+  deal   Deal?  @relation(fields: [dealId], references: [id])
+}
+
+model Message {
+  id          String     @id @default(uuid()) //primary key | universal id 
+  title       String
+  body        String
+  offerer     User       @relation(fields: [userId], references: [id])
+  offererId   String
+  deal        Deal       @relation(fields: [dealId], references: [id])
+  dealId      String
+  Proposals   Proposals? @relation(fields: [proposalsId], references: [id])
+  proposalsId String?
+  userId      String
+}
